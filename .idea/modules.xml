@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/DesktopCloud.iml" filepath="$PROJECT_DIR$/.idea/DesktopCloud.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../fsdownload/ECommerceMiniProgram/.idea/ECommerceMiniProgram.iml" filepath="$PROJECT_DIR$/../fsdownload/ECommerceMiniProgram/.idea/ECommerceMiniProgram.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,33 @@
+name: 自动部署
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH 命令拉取代码
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+#          host: 43.134.84.199
+#          username: root
+#          password: LDtxy2406,
+          script: |
+            if ! command -v git &> /dev/null
+            then
+              sudo apt-get -y install git
+            fi
+            cd /home/ubuntu/ECommerceMiniProgram/ECommerceMiniProgram
+            # 删除源代码
+            rm -r ./ECommerceMiniProgram
+            # 拉取代码
+            git clone https://github.com/davincilll/ECommerceMiniProgram.git
+            sleep 30
+            # 删除容器及镜像
+            /home/ubuntu/ECommerceMiniProgram/delete.sh

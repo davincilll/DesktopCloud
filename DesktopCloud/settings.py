@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-dk32pclsty#4lzo(6x)ve3e(rqpjeqs4t0q5iv%(sl(3tq8&&0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["desktop.mychats.tech"]
 
 # Application definition
 

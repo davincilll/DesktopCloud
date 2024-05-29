@@ -107,6 +107,7 @@ def login(request):
     else:
         return Response({"errcode": 1, "msg": "账号或密码错误", "data": {}})
 
+
 @csrf_exempt
 @api_view(['POST'])
 def syncBookmarkConfig(request):

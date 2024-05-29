@@ -5,7 +5,7 @@ from django.core.mail import send_mail
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from django.views.decorators.csrf import csrf_exempt
 from Users.models import User
 
 import uuid
@@ -107,7 +107,7 @@ def login(request):
     else:
         return Response({"errcode": 1, "msg": "账号或密码错误", "data": {}})
 
-
+@csrf_exempt
 @api_view(['POST'])
 def syncBookmarkConfig(request):
     logger = logging.getLogger(__name__)
@@ -130,6 +130,7 @@ def syncBookmarkConfig(request):
 
 # @check_login
 @api_view(['POST'])
+@csrf_exempt
 def getBookmarkConfig(request):
     # 利用邮箱和token来获取user
     email = request.data['email'].lower()

@@ -36,7 +36,7 @@ def sendCode(request):
     rand_str = sendMessage(email)
     # 将验证码放入缓存，有效时间是10min
     cache.set(email, rand_str, 600)
-    return Response({"errcode": 0, "msg": "发送成功", "data": {"code": rand_str}})
+    return Response({"errcode": 0, "msg": "发送成功", "data": {}})
 
 
 def sendMessage(email):  # 发送邮件并返回验证码

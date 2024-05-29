@@ -29,6 +29,7 @@ def generate_token():
 def sendCode(request):
     # 检验邮箱是否存在
     email = request.data['email'].lower()
+    logging.info(email)
     # 查询邮箱是否被注册过
     if User.objects.filter(email=email).exists():
         return Response({"errcode": 1, "msg": "邮箱已被注册", "data": {}})

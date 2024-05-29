@@ -9,10 +9,12 @@ from django.db import models
 class User(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=32)
+    token = models.CharField(max_length=32, blank=True, null=True)
     # 书签配置
     bookmarkConfig = models.JSONField(default={})
     # 导航配置
     navigationConfig = models.JSONField(default={})
+
     # 这里使用邮箱注册方式去实现
 
     def __str__(self):

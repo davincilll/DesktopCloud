@@ -1,3 +1,5 @@
+import logging
+
 from django.core.cache import cache
 from django.core.mail import send_mail
 from rest_framework import status
@@ -5,6 +7,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from Users.models import User
+
+import uuid
+
+
+def generate_token():
+    """
+    生成一个没有连字符的 UUID 作为 token。
+
+    返回:
+    str: 生成的 token。
+    """
+    return uuid.uuid4().hex
 
 
 # Create your views here.
@@ -56,9 +70,10 @@ def register(request):
     if User.objects.filter(email=email).exists():
         return Response({"errcode": 1, "msg": "邮箱已被注册", "data": {}})
     # 使用session的方式保持登录
-    if cache.get(email) == code:  # 验证验证码
-        User.objects.create(email=email, password=password)
-        return Response({"errcode": 0, "errmsg": "注册成功", "data": {}})
+    if cache.get(email) == code:  # 验证验证
+        token = generate_token()
+        User.objects.create(email=email, password=password, token=token)
+        return Response({"errcode": 0, "errmsg": "注册成功", "data": {"token": token}})
     else:
         return Response({"errcode": 1, "msg": "验证码错误", "data": {}})
 
@@ -91,3 +106,35 @@ def login(request):
         return response
     else:
         return Response({"errcode": 1, "msg": "账号或密码错误", "data": {}})
+
+
+@api_view(['POST'])
+def syncBookmarkConfig(request):
+    logger = logging.getLogger(__name__)
+    logger.info(request.data)
+    #
+    email = request.data['email'].lower()
+    token = request.data['token']
+    bookmarks = request.data['bookmarks']
+    # 检验token的正确性
+    if not User.objects.filter(email=email, token=token).exists():
+        return Response({"errcode": 1, "msg": "账号或密码错误", "data": {}})
+    # 更新新的json配置文件
+    user = User.objects.get(email=email)
+    user.bookmarkConfig = bookmarks
+    user.save()
+
+    # todo:这里需要把json信息写到数据库里去
+    return Response({"errcode": 0, "msg": "成功更新书签信息", "data": {}})
+
+
+# @check_login
+@api_view(['POST'])
+def getBookmarkConfig(request):
+    # 利用邮箱和token来获取user
+    email = request.data['email'].lower()
+    token = request.data['token']
+    user = User.objects.filter(email=email, token=token).first()
+    if user:
+        return Response({"errcode": 0, "msg": "成功获取用户信息", "data": user.bookmarkConfig})
+    return Response({"errcode": 0, "msg": "邮箱或token信息有误", "data": {}})

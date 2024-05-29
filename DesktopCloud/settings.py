@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-dk32pclsty#4lzo(6x)ve3e(rqpjeqs4t0q5iv%(sl(3tq8&&0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["desktop.mychats.tech"]
+ALLOWED_HOSTS = ["desktop.mychats.tech", "localhost"]
 
 # Application definition
 
@@ -35,12 +35,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Users'
+    'corsheaders',
+    'Users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -115,7 +117,6 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, '../DesktopCloud/static')
 STATIC_URL = 'static/'
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -141,3 +142,6 @@ CACHES = {
         },
     },
 }
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True

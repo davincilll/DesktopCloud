@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+import logging
 
 # CSRF_TRUSTED_ORIGINS = []
 
@@ -25,6 +26,17 @@ SECRET_KEY = 'django-insecure-dk32pclsty#4lzo(6x)ve3e(rqpjeqs4t0q5iv%(sl(3tq8&&0
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+logger = logging.getLogger('django')
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+}
+
+# 日志记录器，记录web请求和回调细节，便于调试排错。
+logging.basicConfig(filename=os.path.join(os.getcwd(), 'demo.log'), level=logging.DEBUG, filemode='a',
+                    format='%(asctime)s - %(process)s - %(levelname)s: %(message)s')
+LOGGER = logging.getLogger("demo")
 
 ALLOWED_HOSTS = ["desktop.mychats.tech", "localhost"]
 

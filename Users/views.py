@@ -1,11 +1,11 @@
-import logging
-
 from django.core.cache import cache
 from django.core.mail import send_mail
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
+
+from DesktopCloud.settings import logger
 from Users.models import User
 
 import uuid
@@ -29,7 +29,7 @@ def generate_token():
 def sendCode(request):
     # 检验邮箱是否存在
     email = request.data['email'].lower()
-    logging.info(email)
+    logger.info(email)
     # 查询邮箱是否被注册过
     if User.objects.filter(email=email).exists():
         return Response({"errcode": 1, "msg": "邮箱已被注册", "data": {}})
@@ -112,7 +112,6 @@ def login(request):
 @csrf_exempt
 @api_view(['POST'])
 def syncBookmarkConfig(request):
-    logger = logging.getLogger(__name__)
     logger.info(request.data)
     #
     email = request.data['email'].lower()

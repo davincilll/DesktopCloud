@@ -15,9 +15,6 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-#          host: 43.134.84.199
-#          username: root
-#          password: LDtxy2406,
           script: |
             if ! command -v git &> /dev/null
             then

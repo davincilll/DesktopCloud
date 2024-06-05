@@ -8,5 +8,5 @@ urlpatterns = [
     path('login', views.login, name='login'),
     path('register', views.register, name='regregister'),
     path('syncBookmarkConfig', views.syncBookmarkConfig, name='syncBookmarkConfig'),
-    path('gettBookmarkConfig', views.getBookmarkConfig, name='getBookmarkConfig')
+    path('getBookmarkConfig', views.getBookmarkConfig, name='getBookmarkConfig')
 ]

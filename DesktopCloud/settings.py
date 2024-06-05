@@ -148,7 +148,7 @@ EMAIL_USE_TLS = True  # 是否使用TLS安全传输协议
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://43.134.84.199:6379',
+        'LOCATION': 'redis://175.178.235.132:6379',
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": "LDredis2406",

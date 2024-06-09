@@ -136,6 +136,7 @@ def getBookmarkConfig(request):
     # 利用邮箱和token来获取user
     email = request.data['email'].lower()
     token = request.data['token']
+    logger.info(f"email:{email},token:{token}")
     user = User.objects.filter(email=email, token=token).first()
     if user:
         return Response({"errcode": 0, "msg": "成功获取用户信息", "data": user.bookmarkConfig})
